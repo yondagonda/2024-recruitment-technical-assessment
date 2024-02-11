@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { StarRating } from './star';
 
 export const Main = () => {
@@ -53,14 +53,50 @@ export const Main = () => {
     },
   ];
 
-  console.log(data);
+  const [titleColor, setTitleColor] = useState('text-blue-500');
+  const modalRef = useRef(false);
+
+  const handleClick = () => {
+    titleColor === 'text-blue-500'
+      ? setTitleColor('text-red-400')
+      : setTitleColor('text-blue-500');
+  };
+
+  const openModal = () => {
+    if (modalRef.current) {
+      modalRef.current.classList.remove('hidden');
+      modalRef.current.classList.add('visible');
+    }
+  };
+
+  const closeModal = () => {
+    modalRef.current.classList.remove('visible');
+    modalRef.current.classList.add('hidden');
+  };
 
   return (
     <>
       <main className="pl-12 pt-6 w-full pr-32">
+        <aside
+          ref={modalRef}
+          className="hidden fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]  border border-black
+          h-[30%] w-[30%] items-center justify-center z-10 bg-white"
+        >
+          <button
+            className="border border-black py-1 px-2 mt-5 rounded-sm"
+            onClick={closeModal}
+          >
+            Close
+          </button>
+        </aside>
         <section className="text-start">
           <h4>DevSoc presents</h4>
-          <h1 className="text-blue-500 font-bold text-6xl">unilectives</h1>
+          <button
+            onClick={handleClick}
+            className={`font-bold text-6xl cursor-pointer select-none ${titleColor}`}
+          >
+            unilectives
+          </button>
           <h3 className="font-bold">
             Your one-stop shop for UNSW course and elective reviews.
           </h3>
@@ -74,11 +110,11 @@ export const Main = () => {
                 width={18}
                 className="absolute fill-blue-500 ml-3"
               >
-                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
                 <g
                   id="SVGRepo_tracerCarrier"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 ></g>
                 <g id="SVGRepo_iconCarrier">
                   <title>search</title> <desc>Created with Sketch Beta.</desc>
@@ -86,7 +122,7 @@ export const Main = () => {
                   <g
                     id="Page-1"
                     stroke="none"
-                    stroke-width="1"
+                    strokeWidth="1"
                     sketch:type="MSPage"
                   >
                     <g
@@ -110,14 +146,15 @@ export const Main = () => {
                 placeholder="Search for a course e.g. COMP1511"
                 className="border border-blue-400 rounded-md w-full outline-none placeholder:text-blue-500 pl-10 
                 py-2.5 text-[12px]"
+                onClick={openModal}
               />
             </div>
 
             <select
               name="sort"
               id="sort-by"
-              className="bg-white outline outline-1 outline-gray-400 shadow-sm  py-1.5 pl-2 pr-6 mt-4 rounded-sm
-            outline-none text-gray-500"
+              className="bg-white outline outline-1 outline-gray-400 shadow-sms py-1.5 pl-2 pr-6 mt-4 rounded-sm
+            outline-none text-gray-500 text-sm"
             >
               <option value="">Sort by</option>
               <option value="lowest">Lowest Rating</option>
@@ -130,7 +167,7 @@ export const Main = () => {
           {data.map((card, i) => {
             return (
               <article
-                className="p-4 flex flex-col gap-3 shadow-md rounded-md"
+                className="p-4 flex flex-col gap-3 shadow-lg rounded-md"
                 key={card.course_code}
               >
                 <header className="font-bold flex justify-between">
@@ -139,19 +176,19 @@ export const Main = () => {
                   </h2>
                   <div className="text-start">
                     <StarRating rating={card.average_stars} />
-                    <h7 className="text-[10px] text-slate-400">
+                    <h6 className="text-[10px] text-slate-400">
                       {card.total_reviews} reviews
-                    </h7>
+                    </h6>
                   </div>
                 </header>
                 <h5 className="text-[13px] text-start">{card.course_title}</h5>
 
-                <div className="flex gap-3 pt-6">
+                <div className="flex gap-2.5 pt-6">
                   {card.offered_terms.map((term, i) => {
                     return (
                       <h6
                         key={i}
-                        className="border text-[10px] rounded-lg p-1 bg-blue-100"
+                        className="border text-[10px] rounded-xl py-1 px-1.5 bg-blue-100"
                       >
                         {term}
                       </h6>

@@ -4,8 +4,6 @@ export const StarRating = ({ rating }) => {
   const ratingRounded = Math.round(rating);
 
   function renderStars() {
-    console.log(ratingRounded);
-
     const arr = [];
 
     for (let i = 0; i < ratingRounded; i++) {

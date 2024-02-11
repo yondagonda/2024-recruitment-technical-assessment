@@ -16,7 +16,7 @@ export const Sidebar = () => {
             contentStyleType="text/css"
             width={40}
             height={60}
-            className=" border-b-2 border-gray-300 pb-4"
+            className=" border-b-[1.5px] border-gray-400 pb-4"
           >
             <g transform="matrix(1.3333334 0 0 1.3333334 0 0)">
               <image
